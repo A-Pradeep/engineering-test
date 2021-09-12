@@ -1,5 +1,6 @@
-import { StudentController } from "./controller/StudentController"
-import { RollController } from "./controller/RollController"
+import { StudentController } from "./controller/student-controller"
+import { RollController } from "./controller/roll-controller"
+import { GroupController } from "./controller/group-controller"
 
 export const Routes = [
   {
@@ -79,5 +80,34 @@ export const Routes = [
     route: "/roll/update-student-roll-state",
     controller: RollController,
     action: "updateStudentRollState",
-  }
+  },
+  // --- Group API Endpoints
+  // Create Group
+  {
+    method: "post",
+    route: "/group/create",
+    controller: GroupController,
+    action: "createGroup",
+  },
+  // Read / Get all Group
+  {
+    method: "get",
+    route: "/group/get-all",
+    controller: GroupController,
+    action: "allGroups",
+  },
+  // Update Group
+  {
+    method: "post",
+    route: "/group/update",
+    controller: GroupController,
+    action: "updateGroup",
+  },
+  // Delete Group
+  {
+    method: "delete",
+    route: "/group/delete/:id",
+    controller: GroupController,
+    action: "removeGroup",
+  },
 ]
