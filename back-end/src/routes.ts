@@ -96,6 +96,13 @@ export const Routes = [
     controller: GroupController,
     action: "allGroups",
   },
+  // Read / Get Group by ID
+  {
+    method: "get",
+    route: "/group/get-by-id/:id",
+    controller: GroupController,
+    action: "getGroupByID",
+  },
   // Update Group
   {
     method: "post",
@@ -109,5 +116,19 @@ export const Routes = [
     route: "/group/delete/:id",
     controller: GroupController,
     action: "removeGroup",
+  },
+  // Get students in all group
+  {
+    method: "get",
+    route: "/group/group-students",
+    controller: GroupController,
+    action: "getGroupStudents",
+  },
+  // Get students in a group by ID
+  {
+    method: "get",
+    route: "/group/group-students/:id",
+    controller: GroupController,
+    action: "getGroupStudentsByID",
   },
 ]
