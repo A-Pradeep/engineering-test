@@ -1,15 +1,25 @@
 import { NextFunction, Request, Response } from "express"
 import { getRepository } from "typeorm"
+import { GroupStudent } from "../entity/group-student.entity"
 import { Group } from "../entity/group.entity"
+import { Student } from "../entity/student.entity"
 import { CreateGroup, UpdateGroup } from "../interface/group.interface"
 
 export class GroupController {
   private groupRepository = getRepository(Group)
+  private groupStudentRepository = getRepository(GroupStudent)
+  private studentRepository = getRepository(Student)
 
   async allGroups(request: Request, response: Response, next: NextFunction) {
     // Task 1:
     // Return the list of all groups
     return this.groupRepository.find()
+  }
+
+  async getGroupByID(request: Request, response: Response, next: NextFunction) {
+    // Task 1:
+    // Return the list of all groups
+    return await this.groupRepository.findOne({ id: request.params.id })
   }
 
   async createGroup(request: Request, response: Response, next: NextFunction) {
@@ -63,6 +73,45 @@ export class GroupController {
   async getGroupStudents(request: Request, response: Response, next: NextFunction) {
     // Task 1:
     // Return the list of Students that are in a Group
+    const group_student = await this.groupRepository.find()
+    const groupsData = []
+    for (let i in group_student) {
+      const groupStudent = await this.groupStudentRepository.find({ group_id: group_student[i].id })
+      let studentsData = []
+      for (let j in groupStudent) {
+        let studentByCurrentGroup = await this.studentRepository.findOne({ id: groupStudent[j].student_id })
+        studentsData.push({
+          ...studentByCurrentGroup,
+          full_name: studentByCurrentGroup.first_name + " " + studentByCurrentGroup.last_name,
+        })
+      }
+      groupsData.push({
+        ...group_student[i],
+        studentsData: [...studentsData],
+      })
+    }
+
+    return groupsData
+  }
+
+  async getGroupStudentsByID(request: Request, response: Response, next: NextFunction) {
+    // Task 1:
+    // Return the list of Students that are in a Group
+    const { name } = await this.groupRepository.findOne({ id: request.params.id })
+    const groupStudent = await this.groupStudentRepository.find({ group_id: request.params.id })
+    const studentsData = []
+    for (let i in groupStudent) {
+      let currentStudent = await this.studentRepository.findOne({ id: groupStudent[i].student_id })
+      studentsData.push({
+        ...currentStudent,
+        full_name: currentStudent.first_name + " " + currentStudent.last_name,
+      })
+    }
+
+    return {
+      name,
+      studentsData,
+    }
   }
 
   async runGroupFilters(request: Request, response: Response, next: NextFunction) {
