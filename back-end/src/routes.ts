@@ -105,7 +105,7 @@ export const Routes = [
   },
   // Update Group
   {
-    method: "post",
+    method: "put",
     route: "/group/update",
     controller: GroupController,
     action: "updateGroup",
@@ -130,5 +130,12 @@ export const Routes = [
     route: "/group/group-students/:id",
     controller: GroupController,
     action: "getGroupStudentsByID",
+  },
+  // Group Filters
+  {
+    method: "get",
+    route: "/group/run-group-filters",
+    controller: GroupController,
+    action: "runGroupFilters",
   },
 ]
