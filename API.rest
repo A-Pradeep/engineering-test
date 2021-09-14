@@ -1,0 +1,126 @@
+# ---------------------------------------------------------------------------
+# vs code extension: REST Client
+# ---------------------------------------------------------------------------
+
+# ------API Endpoint Testing------
+
+# Create Group ✅
+POST  http://localhost:4001/group/create
+Content-Type: application/json
+
+{
+    "name": "Group A - Present Students",
+    "number_of_weeks": 0,
+    "roll_states": "absent",
+    "incidents": 1,
+    "ltmt": "<",
+    "student_count": 0
+}
+###
+
+# Read / Get All Groups ✅
+GET  http://localhost:4001/group/get-all
+###
+
+# Read / Get Group by ID ✅
+GET  http://localhost:4001/group/get-by-id/1
+###
+
+#Update Group by ID ✅
+PUT  http://localhost:4001/group/update
+Content-Type: application/json
+
+{
+    "id":1,
+    "roll_states": "present",
+}
+###
+
+# Delete Group by ID ✅
+DELETE http://localhost:4001/group/delete/1
+###
+
+# Create Roll ✅
+POST http://localhost:4001/roll/create
+Content-Type: application/json
+
+{
+    "name": "Students Unmark",
+    "completed_at": "{{$localDatetime rfc1123}}"
+}
+###
+
+# Get students in all group ✅
+GET http://localhost:4001/group/group-students
+###
+
+# Get students in a group by ID ✅
+GET http://localhost:4001/group/group-students/1
+###
+
+# Group Filter ✅
+GET http://localhost:4001/group/run-group-filters
+###
+
+# Add Student state to roll ✅
+POST  http://localhost:4001/roll/add-student-states
+Content-Type: application/json
+
+[
+    {
+        "student_id": 1,
+        "roll_id": 1,
+        "state": "present"
+    },
+    {
+        "student_id": 2,
+        "roll_id": 4,
+        "state": "unmark"
+    },
+    {
+        "student_id": 3,
+        "roll_id": 2,
+        "state": "absent"
+    },
+    {
+        "student_id": 4,
+        "roll_id": 1,
+        "state": "present"
+    },
+    {
+        "student_id": 5,
+        "roll_id": 2,
+        "state": "absent"
+    },
+    {
+        "student_id": 6,
+        "roll_id": 3,
+        "state": "late"
+    },
+    {
+        "student_id": 7,
+        "roll_id": 2,
+        "state": "absent"
+    },
+    {
+        "student_id": 8,
+        "roll_id": 3,
+        "state": "late"
+    },
+    {
+        "student_id": 9,
+        "roll_id": 3,
+        "state": "late"
+    },
+    {
+        "student_id": 10,
+        "roll_id": 3,
+        "state": "late"
+    },
+    {
+        "student_id": 11,
+        "roll_id": 4,
+        "state": "unmark"
+    }
+]
+###

@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { BorderRadius } from "shared/styles/styles"
 import { Colors } from "shared/styles/colors"
 import { RolllStateType } from "shared/models/roll"
+import { currestSortRoll } from "staff-app/daily-care/home-board.page"
 
 interface Props {
   type: RolllStateType
@@ -12,10 +13,13 @@ interface Props {
 }
 export const RollStateIcon: React.FC<Props> = (props) => {
   const { type, size = 20, onClick } = props
+  const currentActiveRoll = useContext(currestSortRoll)
   return (
-    <S.Icon size={size} border={type === "unmark"} bgColor={getBgColor(type)} clickable={Boolean(onClick)} onClick={onClick}>
-      <FontAwesomeIcon icon="check" size={size > 14 ? "lg" : "sm"} />
-    </S.Icon>
+    <S.Container border={currentActiveRoll === type ? currentActiveRoll : null}>
+      <S.Icon size={size} border={type === "unmark"} bgColor={getBgColor(type)} clickable={Boolean(onClick)} onClick={onClick}>
+        <FontAwesomeIcon icon="check" size={size > 14 ? "lg" : "sm"} />
+      </S.Icon>
+    </S.Container>
   )
 }
 
@@ -35,6 +39,11 @@ function getBgColor(type: RolllStateType) {
 }
 
 const S = {
+  Container: styled.div<{ border: string | null }>`
+    padding: 2px;
+    border: ${({ border }) => (border === "unmark" || border === null ? "none" : "1px solid white")};
+    border-radius: 25px;
+  `,
   Icon: styled.div<{ size: number; border: boolean; bgColor: string; clickable: boolean }>`
     display: flex;
     justify-content: center;

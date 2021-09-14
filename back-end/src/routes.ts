@@ -1,5 +1,6 @@
-import { StudentController } from "./controller/StudentController"
-import { RollController } from "./controller/RollController"
+import { StudentController } from "./controller/student-controller"
+import { RollController } from "./controller/roll-controller"
+import { GroupController } from "./controller/group-controller"
 
 export const Routes = [
   {
@@ -79,5 +80,62 @@ export const Routes = [
     route: "/roll/update-student-roll-state",
     controller: RollController,
     action: "updateStudentRollState",
-  }
+  },
+  // --- Group API Endpoints
+  // Create Group
+  {
+    method: "post",
+    route: "/group/create",
+    controller: GroupController,
+    action: "createGroup",
+  },
+  // Read / Get all Group
+  {
+    method: "get",
+    route: "/group/get-all",
+    controller: GroupController,
+    action: "allGroups",
+  },
+  // Read / Get Group by ID
+  {
+    method: "get",
+    route: "/group/get-by-id/:id",
+    controller: GroupController,
+    action: "getGroupByID",
+  },
+  // Update Group
+  {
+    method: "put",
+    route: "/group/update",
+    controller: GroupController,
+    action: "updateGroup",
+  },
+  // Delete Group
+  {
+    method: "delete",
+    route: "/group/delete/:id",
+    controller: GroupController,
+    action: "removeGroup",
+  },
+  // Get students in all group
+  {
+    method: "get",
+    route: "/group/group-students",
+    controller: GroupController,
+    action: "getGroupStudents",
+  },
+  // Get students in a group by ID
+  {
+    method: "get",
+    route: "/group/group-students/:id",
+    controller: GroupController,
+    action: "getGroupStudentsByID",
+  },
+  // Group Filters
+  {
+    method: "get",
+    route: "/group/run-group-filters",
+    controller: GroupController,
+    action: "runGroupFilters",
+  },
 ]

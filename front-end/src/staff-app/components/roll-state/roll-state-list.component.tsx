@@ -7,14 +7,12 @@ import { RolllStateType } from "shared/models/roll"
 
 interface Props {
   stateList: StateList[]
-  onItemClick?: (type: ItemType) => void
+  sortRollType: Function
   size?: number
 }
-export const RollStateList: React.FC<Props> = ({ stateList, size = 14, onItemClick }) => {
+export const RollStateList: React.FC<Props> = ({ stateList, size = 14, sortRollType }) => {
   const onClick = (type: ItemType) => {
-    if (onItemClick) {
-      onItemClick(type)
-    }
+    sortRollType(type === "all" ? "unmark" : type)
   }
 
   return (
