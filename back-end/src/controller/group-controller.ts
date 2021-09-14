@@ -124,7 +124,14 @@ export class GroupController {
     // 2. For each group, query the student rolls to see which students match the filter for the group
     const groups = await this.groupRepository.find()
     for (let i in groups) {
-      const [studentsFilterData, studentCount] = await this.studentRollState.findAndCount({ state: groups[i].roll_states })
+      const sortType = groups[i].roll_states.split("|")
+      const fortmatedSort = new Array()
+      for (let i in sortType) {
+        fortmatedSort.push({
+          state: sortType[i],
+        })
+      }
+      const [studentsFilterData, studentCount] = await this.studentRollState.findAndCount({ where: fortmatedSort })
       await this.groupRepository.update(
         {
           id: groups[i].id,
